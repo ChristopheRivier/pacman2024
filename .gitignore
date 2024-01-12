@@ -1,3 +1,7 @@
+
+perlCodeGen.cpp 
+build/
+
 # Prerequisites
 *.d
 
