@@ -4,6 +4,7 @@
 #include <algorithm>
 
 using namespace std;
+bool param = true;
 #include "point.h"
 #include "element.h"
 #include "carte.h"
@@ -33,18 +34,26 @@ int main()
 
     // game loop
     while (1) {
+        g.init();
         int my_score;
         int opponent_score;
         cin >> my_score >> opponent_score; cin.ignore();
         int visible_pac_count; // all your pacs and enemy pacs in sight
         cin >> visible_pac_count; cin.ignore();
         for (int i = 0; i < visible_pac_count; i++) {
-            int pac_id; // pac number (unique within a team)
+            int pacId; // pac number (unique within a team)
             bool mine; // true if this pac is yours
             int x; // position in the grid
             int y; // position in the grid
-            string type_id; // ROCK, PAPER, SCISSORS, or DEAD
-            cin >> pac_id >> mine >> x >> y >> type_id; cin.ignore();
+            string typeId; // ROCK, PAPER, SCISSORS, or DEAD
+            cin >> pacId >> mine >> x >> y >> typeId; cin.ignore();
+            PacMan e(Point(x, y), Element::Pac, pacId, mine, typeId);
+			if (param) {
+				e.print();
+				cerr << pacId << " " << mine << " " << x << " " << y << " " << typeId << endl;
+			}
+			g.addPac(e);
+
         }
         int visible_pellet_count; // all pellets in sight
         cin >> visible_pellet_count; cin.ignore();
@@ -53,11 +62,14 @@ int main()
             int y;
             int value; // amount of points this pellet is worth
             cin >> x >> y >> value; cin.ignore();
+			Element e(Point(x, y), Element::Bouffe, value, false);
+
+			if (param) {
+				cerr << x << " " << y << " " << value << endl;
+				e.print();
+			}
+			g.addPillule(e);
         }
-
-        // Write an action using cout. DON'T FORGET THE "<< endl"
-        // To debug: cerr << "Debug messages..." << endl;
-
-        cout << "MOVE 0 15 10" << endl; // MOVE <pacId> <x> <y>
+        cout << g.calculDeplacement() << endl;
     }
 }

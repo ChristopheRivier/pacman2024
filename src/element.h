@@ -16,7 +16,7 @@ public:
 		ciseau,
 		mort
 	};
-	Element(Point p, EType e, int i, int v, bool m) :pos(p), typ(e), id(i), val(v),mine(m) {}
+	Element(Point p, EType e, int i, bool m) :pos(p), typ(e), id(i), mine(m) {}
 	bool isMine() { return mine; }
 	int getX() { return pos.x; }
 	int getY() { return pos.y; }
@@ -31,10 +31,7 @@ public:
 			return -800;
 			break;
 		case Element::Bouffe:
-			if (val > 1)
-				return val * (Singleton::get().getPoidBouffe()*Singleton::get().getPoidBouffeMax());
-			else
-				return Singleton::get().getPoidBouffe();
+			return Singleton::get().getPoidBouffe();
 			break;
 		default:
 			return -100;
@@ -49,8 +46,8 @@ public:
 	virtual bool isDead() { return false; }
 	virtual bool isPac() { return false; }
 	virtual void print() {
-		std::cerr << "el=Element(Point(" + std::to_string(pos.x) + "," + std::to_string(pos.y) + "), Element::Bouffe, " + std::to_string(getId()) + "," +
-			std::to_string(val) + " ," + (isMine() ? "true" : "false") + ");" << std::endl;
+		std::cerr << "el=Element(Point(" + std::to_string(pos.x) + "," + std::to_string(pos.y) + "), Element::Bouffe, " + std::to_string(getId()) + 
+		 " ," + (isMine() ? "true" : "false") + ");" << std::endl;
 		std::cerr << "g.addPillule(el);" << std::endl;
 	}
 
@@ -59,7 +56,6 @@ protected:
 	EType typ;
 	int id;
 	bool mine;
-	int val;
 
 };
 
@@ -67,8 +63,8 @@ protected:
 class PacMan :public Element {
 public:
 	
-	PacMan(Point p, EType e, int i, int v, bool m,std::string typeId) :
-		Element(p, e, i, v, m) {
+	PacMan(Point p, EType e, int i, bool m,std::string typeId) :
+		Element(p, e, i, m) {
 		setChi(typeId);
 	}
 	void setChi(std::string t) {
@@ -93,11 +89,9 @@ public:
 	}
 	Echifoumi getChifoumi() { return chichi; }
 	bool isPac() { return true; }
-	bool isSpeed() { return val > 0; }
 	void print() {
-		std::cerr << "e=PacMan(Point(" + std::to_string(pos.x) + "," + std::to_string(pos.y) + "), Element::Pac, " + std::to_string(getId()) + "," +
-			std::to_string(val) + " ," + (isMine() ? "true" : "false") + ", \"" +
-			getStrType() + "\");" << std::endl;
+		std::cerr << "e=PacMan(Point(" + std::to_string(pos.x) + "," + std::to_string(pos.y) + "), Element::Pac, " + std::to_string(getId()) + 
+		    " ," + (isMine() ? "true" : "false") + ", \"" +	getStrType() + "\");" << std::endl;
 		std::cerr << "g.addPac(e);" << std::endl;
 	}
 	std::string getStrType() {
@@ -112,6 +106,8 @@ public:
 			return "ROCK";
 		case papier:
 			return "PAPER";
+		case mort:
+			return "DEAD";
 		default:
 			return "PAPER";
 		}

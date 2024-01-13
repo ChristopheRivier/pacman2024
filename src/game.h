@@ -72,31 +72,15 @@ public:
 			cart->deplacement(sauv);
 		}
 		Point p = deplacement(e);
-		if (e.isSpeed()) {
-			e.setPoint(p);
-			//on informe qu’on est déjà passer par là
-			if(e.isMine())
-				cart->pass(p);
-			p = deplacement(e);
-		}
+		e.setPoint(p);
+		//on informe quï¿½on est dï¿½jï¿½ passer par lï¿½
+		if(e.isMine())
+			cart->pass(p);
 		Action ret;
 		ret.setId(e.getId());
 		ret.setAction(Action::Move);
 		ret.setPosition(p);
-		//check if adversaire can beat me only if possible
-		//if(cpt%10==0)
-		if(false)
-		for (std::vector<PacMan>::iterator it = hisPac.begin();
-			it != hisPac.end();
-			++it) {
-			int minx = abs(p.x - (*it).getX());
-			int miny = abs(p.y - (*it).getY());
-			if (minx + miny <= 1 && !e.CanIBeat((*it))) {
-				ret.setAction(Action::Switch);
-				ret.setSwitch(e.getAttaque((*it).getChifoumi()));
-			}
-			//if(e.getX())
-		}
+
 		std::cerr << ret.toString() << std::endl;
 
 		return ret;
@@ -170,9 +154,6 @@ public:
 			Singleton::get().setPoidVisite(1100);
 		}
 
-		int tt = cpt % 10;
-
-		bool speedPossible = (cpt%10 == 0);
 		for (std::vector<PacMan>::iterator it = hisPac.begin(); it != hisPac.end(); ++it) {
 			cart->addEl(*it);
 			Action a = deplacementSpeed(*it);
@@ -185,7 +166,7 @@ public:
 		for (std::vector<Element>::iterator it = pillule.begin(); it != pillule.end(); ++it) {
 			cart->addEl(*it);
 		}
-		cart->printCarte();
+		//cart->printCarte();
 		std::string ret;
 		for (std::vector<PacMan>::iterator it = myPac.begin(); it != myPac.end(); ++it) {
 			cart->addEl(*it);
@@ -194,15 +175,8 @@ public:
 			if (!(*it).isDead()) {
 				Action a;
 				a.setId((*it).getId());
-				//if (!(*it).isSpeed()&& speedPossible&&noSpeedTest &&( ss.rfind("SWITCH")!=0||cpt<50)) {
-				if (!(*it).isSpeed() && speedPossible && noSpeedTest) {
-					a.setAction(Action::Speed);
-				}
-				else {
-					a = deplacementSpeed((*it));
-					std::cerr << a.toString() << std::endl;
-
-				}
+				a = deplacementSpeed((*it));
+				std::cerr << a.toString() << std::endl;
 				std::map<int,Action>::iterator ee = lstAction.find((*it).getId());
 				if (ee == lstAction.end()) {
 					lstAction.insert(std::pair<int, Action>((*it).getId(), a));
