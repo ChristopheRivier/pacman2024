@@ -8,7 +8,7 @@ class Singleton {
 	int width;
 	int height;
 	double poidAttaque = 1000;
-	double poidVisite = 850;
+	double poidVisite = 0;
 	double poidBouffe = 10;
 	double poidBouffeMax = 100;
 	double poidVide = 10;

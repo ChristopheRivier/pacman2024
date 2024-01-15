@@ -50,12 +50,15 @@ public:
 		for (std::vector<Element*>::iterator it = lst.begin(); it != lst.end(); ++it) {
 			a += (*it)->getPoid(chi);
 		}
-		a += Singleton::get().getPoidBouffe() * value;
+		if( value>0 )
+			a += Singleton::get().getPoidBouffe() * value;
+		else
+			a += Singleton::get().getPoidVisite() * value;
 		return a;
 	}
-	void passer() { value = 0;}
+	void passer() { if( value >0) value = 0; else --value;}
 	void clearVisite() { value = 1; }
-	bool isPasser() { return value==0; }
+	bool isPasser() { return value<=0; }
 	void deplacement() { interdit = true; passer(); }
 	bool isPilluleOnIt() {
 
