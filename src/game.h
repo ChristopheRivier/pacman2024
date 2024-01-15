@@ -46,8 +46,8 @@ public:
 		double p = .0;
 		double dividende = 4;
 		if (cart->isWall(fils))
-			return -10;
-		if (prof == 14 )
+			return -30;
+		if (prof == 20 )
 			return p;
 		prof++;
 		p = cart->getPoid(fils,chi);
@@ -81,7 +81,7 @@ public:
 		ret.setAction(Action::Move);
 		ret.setPosition(p);
 
-		std::cerr << ret.toString() << std::endl;
+		//std::cerr << ret.toString() << std::endl;
 
 		return ret;
 	}
@@ -149,9 +149,9 @@ public:
 		}
 		else {
 			Singleton::get().setPoidFuite(-800);
-			Singleton::get().setPoidVide(1);
+			Singleton::get().setPoidVide(2);
 
-			Singleton::get().setPoidVisite(1100);
+			Singleton::get().setPoidVisite(3500);
 		}
 
 		for (std::vector<PacMan>::iterator it = hisPac.begin(); it != hisPac.end(); ++it) {
@@ -176,7 +176,7 @@ public:
 				Action a;
 				a.setId((*it).getId());
 				a = deplacementSpeed((*it));
-				std::cerr << a.toString() << std::endl;
+				//std::cerr << a.toString() << std::endl;
 				std::map<int,Action>::iterator ee = lstAction.find((*it).getId());
 				if (ee == lstAction.end()) {
 					lstAction.insert(std::pair<int, Action>((*it).getId(), a));

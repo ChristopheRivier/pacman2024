@@ -31,7 +31,7 @@ public:
 			return -800;
 			break;
 		case Element::Bouffe:
-			return Singleton::get().getPoidBouffe();
+			return Singleton::get().getPoidBouffe() * getId();
 			break;
 		default:
 			return -100;
@@ -54,7 +54,7 @@ public:
 protected:
 	Point pos;
 	EType typ;
-	int id;
+	int id; // id is the pac id or the value of the pillule 
 	bool mine;
 
 };

@@ -6,13 +6,19 @@
 
 class Tuile {
 	char input;
-	bool visite = false;
 	bool interdit = false;
+	int value = 0; // 0 = already pass, 1 or 10 for value of the tuile that can be won
 	std::vector<Element*> lst;
 
 public:
 	Tuile() { input = '\0'; }
-	void setChar(char c) { input = c; }
+	void setChar(char c) 
+	{ 
+		input = c; 
+		// init value of the tuile to 1 if it's a pillule
+		if( !isWall() )
+			value = 1;	
+	}
 	char getChar() { return input; }
 	
 	bool isWall() { return input == '#'; }
@@ -44,14 +50,13 @@ public:
 		for (std::vector<Element*>::iterator it = lst.begin(); it != lst.end(); ++it) {
 			a += (*it)->getPoid(chi);
 		}
-		if(!visite)
-			a += Singleton::get().getPoidVisite();
+		a += Singleton::get().getPoidBouffe() * value;
 		return a;
 	}
-	void passer() { visite = true; }
-	void clearVisite() { visite = false; }
-	bool isPasser() { return visite; }
-	void deplacement() { interdit = true; visite = true; }
+	void passer() { value = 0;}
+	void clearVisite() { value = 1; }
+	bool isPasser() { return value==0; }
+	void deplacement() { interdit = true; passer(); }
 	bool isPilluleOnIt() {
 
 		for (std::vector<Element*>::iterator it = lst.begin(); it != lst.end(); ++it) {

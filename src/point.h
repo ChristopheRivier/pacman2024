@@ -16,7 +16,7 @@ class Singleton {
 	static Singleton* singleton;
 
 public:
-	static Singleton& get() { // pour obtenir le singleton
+	static Singleton& get() { // pour obtenir le singletonu
 	   // Instanciation au premier appel seulement
 		static Singleton singleton;
 		return singleton;

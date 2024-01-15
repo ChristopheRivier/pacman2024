@@ -111,7 +111,7 @@ TEST(HelloTest, BasicAssertions) {
 
 
   // Expect two strings not to be equal.
-  EXPECT_STREQ("MOVE 0 19 7|MOVE 1 5 5|MOVE 2 2 3|MOVE 3 29 10", g.calculDeplacement().c_str());
+  EXPECT_STREQ("MOVE 0 19 7|MOVE 1 5 4|MOVE 2 1 3|MOVE 3 29 7", g.calculDeplacement().c_str());
   g.init();
 
 
@@ -195,7 +195,7 @@ el=Element(Point(16,7), Element::Bouffe, 10 ,false);
 g.addPillule(el);
 el=Element(Point(18,7), Element::Bouffe, 10 ,false);
 g.addPillule(el);
-  EXPECT_STREQ("MOVE 0 17 7|MOVE 1 4 3|MOVE 2 34 3|MOVE 3 27 9", g.calculDeplacement().c_str());
+  EXPECT_STREQ("MOVE 0 18 7|MOVE 1 5 5|MOVE 2 2 3|MOVE 3 28 9", g.calculDeplacement().c_str());
   g.init();
 
 e=PacMan(Point(18,7), Element::Pac, 0 ,true, "ROCK");
@@ -246,17 +246,17 @@ el=Element(Point(23,9), Element::Bouffe, 1 ,false);
 g.addPillule(el);
 el=Element(Point(16,7), Element::Bouffe, 10 ,false);
 g.addPillule(el);
-  EXPECT_STREQ("MOVE 0 19 8|MOVE 1 5 1|MOVE 2 2 3|MOVE 3 29 8", g.calculDeplacement().c_str());
+  EXPECT_STREQ("MOVE 0 17 7|MOVE 1 4 3|MOVE 2 1 3|MOVE 3 27 9", g.calculDeplacement().c_str());
   g.init();
-  e=PacMan(Point(19,7), Element::Pac, 0 ,true, "ROCK");
+  e=PacMan(Point(17,7), Element::Pac, 0 ,true, "ROCK");
 g.addPac(e);
-e=PacMan(Point(5,2), Element::Pac, 1 ,true, "PAPER");
+e=PacMan(Point(4,3), Element::Pac, 1 ,true, "PAPER");
 g.addPac(e);
 e=PacMan(Point(1,3), Element::Pac, 2 ,true, "SCISSORS");
 g.addPac(e);
 e=PacMan(Point(31,3), Element::Pac, 2 ,false, "SCISSORS");
 g.addPac(e);
-e=PacMan(Point(29,9), Element::Pac, 3 ,true, "ROCK");
+e=PacMan(Point(27,9), Element::Pac, 3 ,true, "ROCK");
 g.addPac(e);
 el=Element(Point(17,7), Element::Bouffe, 1 ,false);
 g.addPillule(el);
@@ -310,7 +310,7 @@ el=Element(Point(29,11), Element::Bouffe, 1 ,false);
 g.addPillule(el);
 el=Element(Point(16,7), Element::Bouffe, 10 ,false);
 g.addPillule(el);
- EXPECT_STREQ("MOVE 0 17 7|MOVE 1 5 1|MOVE 2 2 3|MOVE 3 29 8", g.calculDeplacement().c_str());
+ EXPECT_STREQ("MOVE 0 16 7|MOVE 1 3 3|MOVE 2 2 3|MOVE 3 26 9", g.calculDeplacement().c_str());
  
   // Expect equality.
   EXPECT_EQ(7 * 6, 42);
