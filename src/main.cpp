@@ -30,6 +30,7 @@ int main()
         getline(cin, row); // one line of the grid: space " " is floor, pound "#" is wall
         g.addCarteLine(i, row);
     }
+    g.calculInit();
     g.printCarte();
 
     // game loop
@@ -38,6 +39,7 @@ int main()
         int my_score;
         int opponent_score;
         cin >> my_score >> opponent_score; cin.ignore();
+        g.addSCore(my_score, opponent_score);
         int visible_pac_count; // all your pacs and enemy pacs in sight
         cin >> visible_pac_count; cin.ignore();
         for (int i = 0; i < visible_pac_count; i++) {

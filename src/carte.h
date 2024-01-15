@@ -38,7 +38,7 @@ public:
 		for (std::vector<Element*>::iterator it = lst.begin();
 			it != lst.end() && trouve == lst.end();
 			++it) {
-			if ((*it)->getId() == e.getId() && (*it)->isMine() == (*it)->isMine()) {
+			if ((*it)->getId() == e.getId() && (*it)->isMine() == e.isMine()) {
 				trouve = it;
 			}
 		}
@@ -106,6 +106,16 @@ public:
 		}
 	}
 
+	int getNbBouffeInitial() {
+		int nb = 0;
+		for (int i = 0; i < width; ++i) {
+			for (int j = 0; j < height;++j) {
+				if (cart[i][j].getChar() == ' ')
+					++nb;
+			}
+		}
+		return nb;
+	}
 	void addTuile(int i, int j, char in) {
 		cart[i][j].setChar(in);
 	}
@@ -211,4 +221,12 @@ public:
 	bool isPasser(Point p) {
 		return cart[p.x][p.y].isPasser();
 	}
+	void clearPillule() {
+		for (int i = 0; i < width; ++i)
+		{
+			for (int j = 0; j < height; ++j) {
+					cart[i][j].passer();
+			}
+		}
+	}	
 };

@@ -315,3 +315,39 @@ g.addPillule(el);
   // Expect equality.
   EXPECT_EQ(7 * 6, 42);
 }
+
+// Demonstrate some basic assertions.
+TEST( TestCheminBlocker, BasicAssertions) {
+
+  Game g;
+  g.initCarte(35, 14);
+  g.addCarteLine(0,"###################################");
+	g.addCarteLine(1,"###   #   #   #     #   #   #   ###");
+	g.addCarteLine(2,"##### # # # ##### ##### # # # #####");
+	g.addCarteLine(3,"# #   # #                 # #   # #");
+	g.addCarteLine(4,"# # # # ### ### ### ### ### # # # #");
+	g.addCarteLine(5,"#   #       #         #       #   #");
+	g.addCarteLine(6,"### ##### # # ### ### # # ##### ###");
+	g.addCarteLine(7,"            # #     # #            ");
+	g.addCarteLine(8,"### # # ### # # ### # # ### # # ###");
+	g.addCarteLine(9,"      #   #     ###     #   #      ");
+	g.addCarteLine(10,"### ##### # ### ### ### # ##### ###");
+	g.addCarteLine(11,"###   #   # #         # #   #   ###");
+	g.addCarteLine(12,"### # # # # # # ### # # # # # # ###");
+	g.addCarteLine(13,"###################################");
+PacMan e =PacMan(Point(15,3), Element::Pac, 0 ,true, "DEAD");
+g.addPac(e);
+e=PacMan(Point(25,10), Element::Pac, 1 ,true, "PAPER");
+g.addPac(e);
+e=PacMan(Point(9,7), Element::Pac, 2 ,true, "DEAD");
+g.addPac(e);
+e=PacMan(Point(15,11), Element::Pac, 3 ,true, "ROCK");
+g.addPac(e);
+
+// pillule only on 29 8 other are 0
+g.clearPillule();
+Element el=Element(Point(29,8), Element::Bouffe, 1 ,false);
+g.addPillule(el);
+EXPECT_STREQ("MOVE 1 25 9|MOVE 3 15 10", g.calculDeplacement().c_str());
+
+}

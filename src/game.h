@@ -12,8 +12,9 @@ class Game {
 	std::vector<Element> pillule;
 	std::map<int, Action> lstAction;
 	int cpt = 0;
-	///test sans speed
-	bool noSpeedTest = true;
+	int myScore = 0;
+	int hisScore = 0;
+	int scoreMax = 0;
 public:
 	Game() :cart(NULL) {}
 	void initCarte(int w, int h) {
@@ -23,6 +24,9 @@ public:
 	}
 	void addCarteLine(int i, std::string l) {
 		cart->addLine(i, l);
+	}
+	void calculInit() {
+		scoreMax = cart->getNbBouffeInitial();
 	}
 	void printCarte() {
 		cart->printCarte();
@@ -44,7 +48,7 @@ public:
 
 	double poidTuile(int prof, Point fils, Point from, Element::Echifoumi chi) {
 		double p = .0;
-		double dividende = 4;
+		double dividende = 3;
 		if (cart->isWall(fils))
 			return -30;
 		if (prof == 20 )
@@ -136,23 +140,17 @@ public:
 		cart->clear();
 		Singleton::get().setPoidBouffeMax(300);
 		Singleton::get().setPoidBouffe(900);
-		if (myPac.size() > 3) {
-			Singleton::get().setPoidAttaque(2000);
-		}
-		else {
-			Singleton::get().setPoidAttaque(1000);
-		}
-		if (cpt < 74) {
-			Singleton::get().setPoidFuite(-1600);
-			Singleton::get().setPoidVide(1);
-			Singleton::get().setPoidVisite(800);
-		}
-		else {
+	
+		if( myScore+hisScore>scoreMax/2){
+			Singleton::get().setPoidAttaque(700);
 			Singleton::get().setPoidFuite(-800);
-			Singleton::get().setPoidVide(2);
-
-			Singleton::get().setPoidVisite(3500);
 		}
+		else{
+			Singleton::get().setPoidAttaque(400);
+			Singleton::get().setPoidFuite(-1600);
+		}
+		Singleton::get().setPoidVide(0.1);
+		
 
 		for (std::vector<PacMan>::iterator it = hisPac.begin(); it != hisPac.end(); ++it) {
 			cart->addEl(*it);
@@ -197,6 +195,10 @@ public:
 		return ret;
 	}
 
+	void addSCore(int my, int his) {
+		myScore=my;
+		hisScore=his;
+	}
 	/**
 	for debug TU add all pass to tuile
 	*/
@@ -206,14 +208,14 @@ public:
 	void notPass(int a, int b) {
 		cart->notPass(a, b);
 	}
+	void clearPillule() {
+		cart->clearPillule();
+	}
 	/**
 	for debug only
 	*/
 	void setCpt(int c) {
 		cpt = c;
-	}
-	void noSpeed() {
-		noSpeedTest = false;
 	}
 	/** For TU*/
 	Carte* getCarte() { return cart; }
